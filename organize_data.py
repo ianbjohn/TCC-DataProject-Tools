@@ -21,25 +21,48 @@ def main():
         print(e)
         return -1
         
-    print("File Opened.");
+    print("Input file opened.")
         
     #We'll assume that the user is smart enough to have typed a .csv file. Maybe add error handling eventually
     
-    #set up our array
+    #set up our array (Organized by months and days of the month)
     data_array = np.zeros([12, 31])
-    
+
+    line_count = 0
     for line in file:
         #Ignore first line
+        if line_count == 0:
+            line_count += 1
+            continue
+        
         #Parse the 3 values on the line
+        line = line.split(',')
+        
         #Use them as indices for the 2D array, increment that cell
-        print(line)
-    
-    print("Success.");
-    
+        data_array[int(line[1]) - 1, int(line[2]) - 1] += 1
+
+    print("Input file read.")
     file.close()
     
-    #Save array to a new .csv file (Maybe 2nd argument)
-    
+    #Save array to a new .csv file (2nd argument)
+    try:
+        file = open(sys.argv[2], mode = "w", encoding = "utf-8")
+    except IOError as e:
+        print(e)
+        return -1
+
+    print("Output file opened.")
+
+    #store our array values in the new .csv output file
+    file.write(",month,day,value\n")
+    for i in range(0, 12):
+        for j in range(0, 31):
+            file.write(str(i + 1) + "," + str(j + 1) + "," + str(int(data_array[i, j])) + "\n")
+
+    print("Output file read.")
+    file.close()
+
+    print("Success.")
     return 0
     
 if __name__ == "__main__":
