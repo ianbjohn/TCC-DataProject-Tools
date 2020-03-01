@@ -18,14 +18,23 @@ def main():
         print(e)
         return -1;
         
-    print("File Opened.\n");
+    print("File Opened.");
         
     #We'll assume that the user is smart enough to have typed a .csv file. Maybe add error handling eventually
     
     #set up our array
-    data_array = np.array([12, 31])
+    data_array = np.zeros([12, 31])
+    
+    #for line in file:
+        #Ignore first line
+        #Parse the 3 values on the line
+        #Use them as indices for the 2D array, increment that cell
+    
+    print("Success.");
     
     file.close()
+    
+    #Save array to a new .csv file (Maybe 2nd argument)
     
     return 0
     
