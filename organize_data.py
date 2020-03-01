@@ -54,12 +54,12 @@ def main():
     print("Output file opened.")
 
     #store our array values in the new .csv output file
-    file.write(",month,day,value\n")
+    file.write("month,day,value\n")
     for i in range(0, 12):
         for j in range(0, 31):
             file.write(str(i + 1) + "," + str(j + 1) + "," + str(int(data_array[i, j])) + "\n")
 
-    print("Output file read.")
+    print("Output file written.")
     file.close()
 
     print("Success.")
