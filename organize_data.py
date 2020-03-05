@@ -27,8 +27,10 @@ def main():
     
     #set up our array (Organized by months and days of the month)
     data_array = np.zeros([12, 31])
+    accum_array = np.zeros([12, 31])
 
     line_count = 0
+    sum = 0
     for line in file:
         #Ignore first line
         if line_count == 0:
@@ -38,8 +40,10 @@ def main():
         #Parse the 3 values on the line
         line = line.split(',')
         
-        #Use them as indices for the 2D array, increment that cell
+        #Use them as indices for the 2D array, increment that cell. Add the current sum to the accumulation array
         data_array[int(line[1]) - 1, int(line[2]) - 1] += 1
+        sum += 1
+        accum_array[int(line[1]) - 1, int(line[2]) - 1] = sum
 
     print("Input file read.")
     file.close()
@@ -54,10 +58,10 @@ def main():
     print("Output file opened.")
 
     #store our array values in the new .csv output file
-    file.write("month,day,value\n")
+    file.write("month,day,value,sum\n")
     for i in range(0, 12):
         for j in range(0, 31):
-            file.write(str(i + 1) + "," + str(j + 1) + "," + str(int(data_array[i, j])) + "\n")
+            file.write(str(i + 1) + "," + str(j + 1) + "," + str(int(data_array[i, j])) + "," + str(int(accum_array[i, j])) + "\n")
 
     print("Output file written.")
     file.close()
