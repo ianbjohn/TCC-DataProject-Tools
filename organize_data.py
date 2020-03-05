@@ -30,7 +30,6 @@ def main():
     accum_array = np.zeros([12, 31])
 
     line_count = 0
-    sum = 0
     for line in file:
         #Ignore first line
         if line_count == 0:
@@ -42,8 +41,13 @@ def main():
         
         #Use them as indices for the 2D array, increment that cell. Add the current sum to the accumulation array
         data_array[int(line[1]) - 1, int(line[2]) - 1] += 1
-        sum += 1
-        accum_array[int(line[1]) - 1, int(line[2]) - 1] = sum
+        
+    #traverse our data array and get the integral / accumulation of data
+    sum = 0
+    for i in range(0, 12):
+        for j in range(0, 31):
+            sum += data_array[i, j]
+            accum_array[i, j] = sum
 
     print("Input file read.")
     file.close()
