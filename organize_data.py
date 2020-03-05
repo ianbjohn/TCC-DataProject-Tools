@@ -8,6 +8,8 @@ import numpy as np
 
 
 def main():
+    days_of_month = np.array([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31])
+
     if len(sys.argv) < 2:
         print("No input filename detected.")
         return -1
@@ -31,16 +33,22 @@ def main():
 
     line_count = 0
     for line in file:
-        #Ignore first line
+        #Parse the 4 values on the line
+        line = line.split(',')
+    
         if line_count == 0:
+            #ignore the first line
             line_count += 1
             continue
+        elif line_count == 1:
+            #fetch the year
+            year = line[1]
+            line_count += 1
         
-        #Parse the 3 values on the line
-        line = line.split(',')
+        
         
         #Use them as indices for the 2D array, increment that cell. Add the current sum to the accumulation array
-        data_array[int(line[1]) - 1, int(line[2]) - 1] += 1
+        data_array[int(line[2]) - 1, int(line[3]) - 1] += 1
         
     #traverse our data array and get the integral / accumulation of data
     sum = 0
@@ -62,10 +70,14 @@ def main():
     print("Output file opened.")
 
     #store our array values in the new .csv output file
-    file.write("month,day,value,sum\n")
+    file.write("date,value,sum\n")
     for i in range(0, 12):
         for j in range(0, 31):
-            file.write(str(i + 1) + "," + str(j + 1) + "," + str(int(data_array[i, j])) + "," + str(int(accum_array[i, j])) + "\n")
+            #ignore dates that don't exist (such as february the 31st)
+            if (j + 1) > days_of_month[i]:
+                continue
+        
+            file.write(str(i + 1) + "/" + str(j + 1) + "/" + str(year) + "," + str(int(data_array[i, j])) + "," + str(int(accum_array[i, j])) + "\n")
 
     print("Output file written.")
     file.close()
