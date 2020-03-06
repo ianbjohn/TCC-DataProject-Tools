@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
-#Quick test code to organize our csv data a bit better
+#Takes raw data from PIEthon (Just a list of events and when they happen) and outputs it in a much more organized fashion (For each data, how many events happened)
 
 import sys
-from io import open  #Seems hacky, but test without it, the machine I'm currently working on might just have python2 installed or something
+#from io import open  #Seems hacky, but test without it, the machine I'm currently working on might just have python2 installed or something
 import numpy as np
 
 
 def main():
-    days_of_month = np.array([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31])
+    days_of_month = np.array([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]) #Used to prevent outputting dates that don't exist
 
     if len(sys.argv) < 2:
         print("No input filename detected.")
@@ -44,8 +44,6 @@ def main():
             #fetch the year
             year = line[1]
             line_count += 1
-        
-        
         
         #Use them as indices for the 2D array, increment that cell. Add the current sum to the accumulation array
         data_array[int(line[2]) - 1, int(line[3]) - 1] += 1
